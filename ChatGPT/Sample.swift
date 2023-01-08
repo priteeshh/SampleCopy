@@ -1,20 +1,26 @@
-//
-//  Sample.swift
-//  ChatGPT
-//
-//  Created by Preeteesh Remalli on 08/01/23.
-//
-
 import SwiftUI
 
-struct Sample: View {
+struct ProgressBar: View {
+    @State var value: Float
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle().frame(width: geometry.size.width, height: geometry.size.height)
+                    .opacity(0.3)
+                    .foregroundColor(Color(UIColor.gray))
+
+                Rectangle().frame(width: min(CGFloat(self.value)*geometry.size.width, geometry.size.width), height: geometry.size.height)
+                    .foregroundColor(Color(UIColor.green))
+                    .animation(.linear)
+            }.cornerRadius(45.0)
+        }
     }
 }
-
-struct Sample_Previews: PreviewProvider {
+struct CustomProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        Sample()
+        ProgressBar(value: 0.01)
+            .frame(height: 50)
+            .padding()
     }
 }
